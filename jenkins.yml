@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv
+  namespace: monitoring
+spec:
+  capacity:
+    storage: 4Gi  # Allocate 10GB storage
+  accessModes:
+    - ReadWriteOnce
+
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: Retain  # Data persists even if PVC is deleted
+  hostPath:
+    path: "/home/akhil/jenkins"  # Change this path as needed
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: ""
+  volumeName: jenkins-pv  # Bind PVC to the PV explicitly
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: monitoring
+  labels:
+    app: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      securityContext:
+        fsGroup: 1000  # Set permissions for Jenkins
+      containers:
+      - name: jenkins
+        image: jenkins/jenkins:lts-jdk17
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000  # For Jenkins agents
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+      volumes:
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: monitoring 
+spec:
+  type: NodePort  # Change LoadBalancer to NodePort
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 32080  # Specify a port in the range 30000-32767 (or let Kubernetes assign automatically)
+  - name: agent
+    port: 50000
+    targetPort: 50000
+    nodePort: 32500  # Optional, needed if using agent connections
+  selector:
+    app: jenkins
+

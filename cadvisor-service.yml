@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cadvisor
+  namespace: monitoring
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      nodePort: 30092  # Choose a port between 30000 and 32767 for external access
+  selector:
+    app: cadvisor
+  type: NodePort
+
