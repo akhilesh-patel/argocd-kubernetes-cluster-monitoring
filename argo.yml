@@ -7,10 +7,9 @@ spec:
   project: default
   source:
     repoURL: https://github.com/akhilesh-patel/argocd-kubernetes-cluster-monitoring.git
-    path: ./react-app.yml  # Change this to match your folder structure
+    path: roll  # ✅ Points to folder where kustomization.yaml is located
     targetRevision: HEAD
-    directory:
-      recurse: true
+    kustomize: {}  # ✅ Enables Kustomize to pick only 'react-app.yml'
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
