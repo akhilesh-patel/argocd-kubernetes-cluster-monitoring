@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          # image: akhileshpatel123/react-app:v1
-            image: nginx:latest  # Use a specific version instead of 'latest'
+           image: nginx:latest  # Uise a specific version instead of 'latest'
           imagePullPolicy: Always  # Ensures the latest image is pulled every time
           ports:
             - containerPort: 80
