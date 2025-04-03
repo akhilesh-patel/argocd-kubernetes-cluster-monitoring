@@ -6,6 +6,8 @@ metadata:
   annotations:
     argocd-image-updater.argoproj.io/image-list: akhileshpatel123/react-app
     argocd-image-updater.argoproj.io/react-app.update-strategy: latest
+    argocd-image-updater.argoproj.io/react-app.pull-secret: allow
+    argocd-image-updater.argoproj.io/react-app.check-interval: 1m  # 1 min me check karega
 spec:
   replicas: 1
   selector:
@@ -19,6 +21,7 @@ spec:
       containers:
         - name: react-app
           image: akhileshpatel123/react-app:latest
+          imagePullPolicy: Always  # Ensure new image is always pulled
           ports:
             - containerPort: 80
 
