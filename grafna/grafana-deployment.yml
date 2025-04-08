@@ -23,7 +23,8 @@ spec:
               value: "admin"  # Set your Grafana admin password
           volumeMounts:
             - name: grafana-storage
-              mountPath: /var/lib/grafana
+              mountPath: /var/lib/grafana  # Correct Grafana data directory
       volumes:
         - name: grafana-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+
