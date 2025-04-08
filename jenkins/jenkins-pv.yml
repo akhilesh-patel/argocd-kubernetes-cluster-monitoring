@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv
+  namespace: monitoring
+spec:
+  capacity:
+    storage: 10Gi  # ✅ Increased Storage
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/home/akhil/jenkins"  # ✅ Ensure this directory exists & has 777 permissions
+
