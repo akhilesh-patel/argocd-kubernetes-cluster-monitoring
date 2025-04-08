@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  password: S0NXTGJEbW9xNWZUV3FiMQ==
+kind: Secret
+metadata:
+  creationTimestamp: "2025-04-03T12:11:48Z"
+  name: argocd-initial-admin-secret
+  namespace: argocd
+  resourceVersion: "159886"
+  uid: dca6a749-6b45-49c2-ba09-c7bdf50ef7b1
+type: Opaque
