@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: akhileshpatel123/react-app:v1744107356 # here plese  insert your image
+          image: akhileshpatel123/react-app:v1744107356
           imagePullPolicy: Always  # Ensures the latest image is pulled every time
           ports:
             - containerPort: 80
