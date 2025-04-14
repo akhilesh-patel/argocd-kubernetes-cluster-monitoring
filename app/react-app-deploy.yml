@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: akhileshpatel123/react-app:v1744138848 # please enter you image id
+          image: akhileshpatel123/react-app:v1744660686
           imagePullPolicy: Always  # Ensures the latest image is pulled every time
           ports:
             - containerPort: 80
